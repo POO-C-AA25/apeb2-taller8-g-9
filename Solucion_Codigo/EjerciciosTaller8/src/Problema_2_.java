@@ -8,5 +8,31 @@
  * @author paulo
  */
 public class Problema_2_ {
+
+}
+
+abstract class Menu {
+
+    public abstract String nombrePlato();
+    public abstract double valorMenu();
+    public abstract double valorInicial();
+
+    public Menu() {
+    }
+}
+
+class menuDia extends Menu {
     
+}
+
+class menuCarta extends Menu{
+
+}
+
+class menuNino extends Menu{
+
+}
+
+class menuEconomico extends Menu{
+
 }
