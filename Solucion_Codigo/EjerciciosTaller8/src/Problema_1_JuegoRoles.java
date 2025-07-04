@@ -14,43 +14,52 @@ public class Problema_1_JuegoRoles {
     public static void main(String[] args) {
         guerrero = new Guerrero("Gigante", 3);
         mago = new Mago("Invisible", 3);
-        arquero = new Arquero("Larga Distancia", 3);
+        arquero = new Arquero("Precisión", 3);
 
-        boolean gana = guerrero.atacar(mago);
-        if (gana) {
-            guerrero.experiencia += 1;
-            guerrero.batallasGanadas += 1;
-            mago.vidas -= 1;
-        } else {
-            mago.experiencia += 1;
-            mago.batallasGanadas += 1;
-            guerrero.vidas -= 1;
-        }
-        System.out.println("Guerrero: " + guerrero + "Mago: " + mago);
+        System.out.println("----- PELEA 1: GUERRERO vs MAGO -----");
+        pelea(guerrero, mago);
+
+        System.out.println("----- PELEA 2: ARQUERO vs GUERRERO -----");
+        pelea(arquero, guerrero);
+
+        System.out.println("\nESTADO FINAL DE LOS PERSONAJES:");
+        System.out.println("GUERRERO: " + guerrero);
+        System.out.println("MAGO: " + mago);
+        System.out.println("ARQUERO: " + arquero);
     }
 
+    public static void pelea(Personaje atacante, Personaje defensor) {
+        boolean gana = atacante.ataque(defensor);
+        if (gana) {
+            atacante.experiencia += 1;
+            atacante.batallasGana += 1;
+            defensor.vidas -= defensor.defensa();
+            System.out.println(atacante.getClass().getSimpleName() + " gana el ataque.");
+        } else {
+            defensor.experiencia += 1;
+            defensor.batallasGana += 1;
+            atacante.vidas -= atacante.defensa();
+            System.out.println(defensor.getClass().getSimpleName() + " se defiende exitosamente.");
+        }
+    }
 }
 
 abstract class Personaje {
 
-    public int vidas;
-    public int experiencia;
-    public int batallasGanadas;
+    public int vidas, experiencia, batallasGana;
 
     public Personaje(int vidas) {
         this.vidas = vidas;
     }
 
-    public abstract boolean atacar(Personaje personaje);
+    public abstract boolean ataque(Personaje personaje);
 
-    public abstract int defender();
+    public abstract int defensa();
 
     @Override
     public String toString() {
-        return "Personaje{" + "vidas=" + vidas + ", experiencia="
-                + experiencia + ", batallasGanadas=" + batallasGanadas + '}';
+        return "Personaje{" + "vidas=" + vidas + ", experiencia=" + experiencia + ", batallasGana=" + batallasGana + '}';
     }
-
 }
 
 class Guerrero extends Personaje {
@@ -62,21 +71,21 @@ class Guerrero extends Personaje {
         this.habilidades = habilidades;
     }
 
-    public boolean atacar(Personaje personaje) {
+    @Override
+    public boolean ataque(Personaje personaje) {
         int bandera = (int) (Math.random() * 2);
-        boolean gana = (bandera == 1) ? true : false;
-        return gana;
+        return bandera == 1;
     }
 
-    public int defender() {
-        return 0;
+    @Override
+    public int defensa() {
+        return 1;
     }
 
     @Override
     public String toString() {
         return "Guerrero{" + "habilidades=" + habilidades + '}' + super.toString();
     }
-
 }
 
 class Mago extends Personaje {
@@ -88,19 +97,18 @@ class Mago extends Personaje {
         this.estrategia = estrategia;
     }
 
-    public boolean atacar(Personaje personaje) {
-        return false;
+    public boolean ataque(Personaje personaje) {
+        int probabilidad = (int) (Math.random() * 2);
+        return probabilidad == 1;
     }
 
-    public int defender() {
-        return 0;
+    public int defensa() {
+        return 1;
     }
 
-    @Override
     public String toString() {
         return "Mago{" + "estrategia=" + estrategia + '}' + super.toString();
     }
-
 }
 
 class Arquero extends Personaje {
@@ -112,11 +120,16 @@ class Arquero extends Personaje {
         this.atributo = atributo;
     }
 
-    public boolean atacar(Personaje personaje) {
-        return false;
+    public boolean ataque(Personaje personaje) {
+        int probabilidad = (int) (Math.random() * 2);
+        return probabilidad == 1;
     }
 
-    public int defender() {
-        return 0;
+    public int defensa() {
+        return 1;
+    }
+
+    public String toString() {
+        return "Arquero{" + "atributo=" + atributo + '}' + super.toString();
     }
 }
