@@ -7,7 +7,7 @@
  *
  * @author paulo
  */
-public class Problema_2_ {
+public class Problema_2_Menu {
 
 }
 
