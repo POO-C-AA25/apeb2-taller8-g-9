@@ -7,6 +7,6 @@
  *
  * @author paulo
  */
-public class Problema_3_ {
+public class Problema_6_Conflicto {
     
 }
